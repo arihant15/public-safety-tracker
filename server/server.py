@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
 
 @app.route('/')
@@ -8,6 +8,13 @@ def hello_world():
 @app.route('/car_location')
 def car_location():
     return "car location"
+
+
+@app.route('/get_route/', methods=['GET'])
+def get_route():
+    print request.args.get('x')
+    print request.args.get('y')
+    return "route"
 
 if __name__ == '__main__':
     """
