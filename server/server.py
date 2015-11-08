@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import here_server
 
 app = Flask(__name__)
@@ -12,7 +12,8 @@ def hello_world():
 @app.route('/car_location')
 def car_location():
     location = car.car_location()
-    return str(location[0]) + "," + str(location[1])
+    return jsonify({"result" : location})
+    #return str(location[0]) + "," + str(location[1])
 
 @app.route('/start_operation')
 def start_operation():
