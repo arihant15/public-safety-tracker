@@ -4,6 +4,7 @@ import sys
 import xml.etree.ElementTree
 import webbrowser
 import threading
+import time
 
 pickup_location_1 = "35 W 33rd St, Chicago, IL 60616"
 pickup_location_2 = "3241 S Federal St, Chicago, IL 60616"
@@ -16,14 +17,30 @@ class PublicSafety():
         self.name = name
         self.home_latitude, self.home_longtidue = self.get_location(self.home)
         #self.current_latiude, self.current_longtidue = self.get_location(self.home)
-        self.current_location = self.home
-        #threading.Thread(target=self.start_operation).start()
+        self.current_location = self.get_location(self.home)
+        threading.Thread(target=self.start_operation).start()
+
+    def move_car(self,start, dest):
+        start_location = self.get_location(start)
+        self.current_location = start_location
+        dest_location = self.get_location(dest)
+        hop_dist = (float(dest_location[1]) - float(start_location[1])) / 5
+        for i in range(5):
+            time.sleep(5)
+            self.current_location[1] = float(self.current_location[1]) + hop_dist
+            #self.obtain_route(self.current_location, dest_location)
 
     def start_operation(self):
-        dest_location = self.get_location(self.home)
-        curr_location = self.get_location(self.current_location)
-        path = self.obtain_route(curr_location,dest_location)
-        print path.json()
+        i = 0
+        while True:
+            if (i % 2 == 0):
+                self.move_car(self.home, pickup_location_1)
+                i += 1
+            else:
+                self.move_car(pickup_location_1, self.home)
+                i += 1
+        #path = self.obtain_route(curr_location,dest_location)
+        #print path.json()
 
     def get_location(self, address):
         base_url = "http://geocoder.cit.api.here.com/6.2/geocode.xml"
@@ -38,7 +55,7 @@ class PublicSafety():
         for child in position:
             latitude = child.find('Latitude').text
             longitude = child.find('Longitude').text
-        return (latitude, longitude)
+        return [latitude, longitude]
 
     def car_location(self):
         latitude, longitude = self.get_location(self.current_location)
