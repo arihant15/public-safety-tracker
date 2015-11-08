@@ -22,7 +22,7 @@ def car_location():
 @app.route('/get_route', methods=['GET'])
 def get_route():
     location = request.args.get('location')
-    return car.get_route(request.args.get('location'))
+    return car.get_route(request.args.get('location')).content
 
 @app.route('/request_publicsafety', methods=['GET'])
 def request_publicsafety():
