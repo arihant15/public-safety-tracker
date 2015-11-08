@@ -19,7 +19,7 @@ class PublicSafety():
         self.home_latitude, self.home_longtidue = self.get_location(self.home)
         #self.current_latiude, self.current_longtidue = self.get_location(self.home)
         self.current_location = self.get_location(self.home)
-        #threading.Thread(target=self.start_operation).start()
+        threading.Thread(target=self.start_operation).run()
 
     def move_car(self,start, dest):
         start_location = self.get_location(start)
@@ -27,19 +27,20 @@ class PublicSafety():
         dest_location = self.get_location(dest)
         hop_dist = (float(dest_location[1]) - float(start_location[1])) / 5
         for i in range(5):
-            time.sleep(10)
+            time.sleep(5)
             self.current_location[1] = float(self.current_location[1]) + hop_dist
             self.obtain_route(self.current_location, dest_location)
+        return
 
     def start_operation(self):
-        i = 0
+        i = True
         while True:
-            if (i % 2 == 0):
-                self.move_car(self.home, pickup_location_1)
-                i += 1
+            if (i == True):
+                res = self.move_car(self.home, pickup_location_1)
+                i = False
             else:
-                self.move_car(pickup_location_1, self.home)
-                i += 1
+                res = self.move_car(pickup_location_1, self.home)
+                i = True
             time.sleep(15)
 
 
