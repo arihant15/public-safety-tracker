@@ -36,21 +36,33 @@ class PublicSafety():
         latitude, longitude = self.get_location(self.current_location)
         return (latitude, longitude)
 
-    def obtain_route(self):
+    def obtain_route(self, current_location, destination_location):
         base_url = "http://route.cit.api.here.com/routing/7.2/calculateroute.json"
         pad_app_id = "?app_id="+self.properties['app-id']
         pad_app_code = "&app_code="+self.properties['app-code']
-        curr_lat, curr_long = self.get_location(self.current_location)
-        pad_waypoint0 = "&waypoint0=geo!"+curr_lat+","+curr_long
-        dest_lat, dest_long = self.get_location(pickup_location_2)
-        pad_waypoint1 = "&waypoint1=geo!"+dest_lat+","+dest_long
+        #curr_lat, curr_long = self.get_location(self.current_location)
+        pad_waypoint0 = "&waypoint0=geo!"+str(current_location[0])+","+str(current_location[1])
+        #dest_lat, dest_long = self.get_location(pickup_location_2)
+        pad_waypoint1 = "&waypoint1=geo!"+str(destination_location[0])+","+str(destination_location[1])
         mode = "&mode=fastest;car;"
         url = base_url + pad_app_id + pad_app_code + pad_waypoint0 + pad_waypoint1 + mode
         response = (requests.get(url))
         base_url1 = "http://image.maps.cit.api.here.com/mia/1.6/routing"
-        poix0 = "&poix0="+curr_lat+","+curr_long+";00a3f2;00a3f2;11;."
-        poix1 = "&poix1="+dest_lat+","+dest_long+";white;white;11;."
+        poix0 = "&poix0="+str(current_location[0])+","+str(current_location[1])+";00a3f2;00a3f2;11;."
+        poix1 = "&poix1="+str(destination_location[0])+","+str(destination_location[1])+";white;white;11;."
         markings = "&lc=1652B4&lw=6&t=0&ppi=320&w=400&h=600"
         url1 = base_url1 + pad_app_id + pad_app_code + pad_waypoint0 + pad_waypoint1 + poix0 + poix1+ markings
         webbrowser.open(url1)
-        return response.json()
+        return response
+
+    def get_route(self, location):
+        if location == 1:
+            destination = pickup_location_1
+        else:
+            destination = pickup_location_2
+        dest_location = self.get_location(destination)
+        print dest_location
+        curr_location = self.get_location(self.current_location)
+        path = (self.obtain_route(curr_location,dest_location))
+        print path.json()
+        return path
