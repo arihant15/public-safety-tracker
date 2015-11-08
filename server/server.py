@@ -17,12 +17,12 @@ def hello_world():
 @app.route('/car_location')
 def car_location():
     latitude, longitude = car.car_location()
-    return latitude + ", " + longitude
+    return latitude + "," + longitude
 
 @app.route('/get_route', methods=['GET'])
 def get_route():
     location = request.args.get('location')
-    return car.get_route(request.args.get('location'))
+    return car.get_route(location).json
 
 @app.route('/request_publicsafety', methods=['GET'])
 def request_publicsafety():
