@@ -46,4 +46,4 @@ class PublicSafety():
         mode = "&mode=fastest;car;"
         url = base_url + pad_app_id + pad_app_code + pad_waypoint0 + pad_waypoint1 + mode
         response = (requests.get(url))
-        print response.json() 
+        return response.json()

@@ -1,10 +1,14 @@
 from flask import Flask, request
 from here_server import PublicSafety
+import json
 import xml.etree.ElementTree
 
 
 
 app = Flask(__name__)
+
+car = PublicSafety("John Doe")
+car2 = PublicSafety("Gandalf")
 
 @app.route('/')
 def hello_world():
@@ -12,20 +16,13 @@ def hello_world():
 
 @app.route('/car_location')
 def car_location():
-    car = PublicSafety("John Doe")
-    car.car_location()
+    latitude, longitude = car.car_location()
+    return latitude + ", " + longitude
 
-    print car.latitude
-    print car.longitude
-
-    return "car location"
-
-
-@app.route('/get_route/', methods=['GET'])
+@app.route('/get_route', methods=['GET'])
 def get_route():
-    print request.args.get('x')
-    print request.args.get('y')
-    return "route"
+    print request.args.get('pickuplocation')
+    return json.dumps(car.obtain_route())
 
 if __name__ == '__main__':
     """
