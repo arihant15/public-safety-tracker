@@ -21,8 +21,7 @@ def car_location():
 
 @app.route('/get_route', methods=['GET'])
 def get_route():
-    print request.args.get('pickuplocation')
-    return json.dumps(car.obtain_route())
+    return car.get_route(request.args.get('pickuplocation'))
 
 @app.route('/request_publicsafety', methods=['GET'])
 def request_publicsafety():
