@@ -1,14 +1,11 @@
 from flask import Flask, request
 from here_server import PublicSafety
 import json
-import xml.etree.ElementTree
-
-
 
 app = Flask(__name__)
 
 car = PublicSafety("John Doe")
-car2 = PublicSafety("Gandalf")
+#car2 = PublicSafety("Gandalf")
 
 @app.route('/')
 def hello_world():
@@ -16,8 +13,8 @@ def hello_world():
 
 @app.route('/car_location')
 def car_location():
-    latitude, longitude = car.car_location()
-    return latitude + "," + longitude
+    location = car.car_location()
+    return str(location[0]) + "," + str(location[1])
 
 @app.route('/start_operation')
 def start_operation():

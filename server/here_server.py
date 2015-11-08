@@ -6,6 +6,7 @@ import webbrowser
 import threading
 import time
 
+
 pickup_location_1 = "35 W 33rd St, Chicago, IL 60616"
 pickup_location_2 = "3241 S Federal St, Chicago, IL 60616"
 
@@ -18,7 +19,7 @@ class PublicSafety():
         self.home_latitude, self.home_longtidue = self.get_location(self.home)
         #self.current_latiude, self.current_longtidue = self.get_location(self.home)
         self.current_location = self.get_location(self.home)
-        threading.Thread(target=self.start_operation).start()
+        #threading.Thread(target=self.start_operation).start()
 
     def move_car(self,start, dest):
         start_location = self.get_location(start)
@@ -26,9 +27,9 @@ class PublicSafety():
         dest_location = self.get_location(dest)
         hop_dist = (float(dest_location[1]) - float(start_location[1])) / 5
         for i in range(5):
-            time.sleep(5)
+            time.sleep(10)
             self.current_location[1] = float(self.current_location[1]) + hop_dist
-            #self.obtain_route(self.current_location, dest_location)
+            self.obtain_route(self.current_location, dest_location)
 
     def start_operation(self):
         i = 0
@@ -39,8 +40,8 @@ class PublicSafety():
             else:
                 self.move_car(pickup_location_1, self.home)
                 i += 1
-        #path = self.obtain_route(curr_location,dest_location)
-        #print path.json()
+            time.sleep(15)
+
 
     def get_location(self, address):
         base_url = "http://geocoder.cit.api.here.com/6.2/geocode.xml"
@@ -58,8 +59,8 @@ class PublicSafety():
         return [latitude, longitude]
 
     def car_location(self):
-        latitude, longitude = self.get_location(self.current_location)
-        return (latitude, longitude)
+        latitude, longitude = self.current_location
+        return [latitude, longitude]
 
     def obtain_route(self, current_location, destination_location):
         base_url = "http://route.cit.api.here.com/routing/7.2/calculateroute.json"
@@ -88,6 +89,6 @@ class PublicSafety():
         dest_location = self.get_location(destination)
         print dest_location
         curr_location = self.get_location(self.current_location)
-        path = (self.obtain_route(curr_location,dest_location))
-        print path.json()
-        return path
+        #path = (self.obtain_route(curr_location,dest_location))
+        #print path.json()
+        #return path
