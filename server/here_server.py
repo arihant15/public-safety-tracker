@@ -1,4 +1,5 @@
 import requests
+import json
 import sys
 
 
@@ -8,7 +9,7 @@ pickup_location_2 = "3241 S Federal St, Chicago, IL 60616"
 class PublicSafety():
     def __init__(self, name):
         self.home = "199 E 33rd Blvd, Chicago, IL 60616"
-        with open(properties.json) as f:
+        with open("properties.json") as f:
             self.properties = json.loads(f.read())
         self.name = name
 
@@ -20,7 +21,7 @@ class PublicSafety():
         pad_searchtext = "&searchtext="+self.home
         url = base_url + pad_app_id + pad_app_code + pad_gen + pad_searchtext
         response = requests.get(url)
-        return response
+        return response.content
         #self.x_cordinate
         #self.y_cordinate
         

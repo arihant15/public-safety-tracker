@@ -1,4 +1,5 @@
 from flask import Flask, request
+from here_server import PublicSafety
 app = Flask(__name__)
 
 @app.route('/')
@@ -7,6 +8,9 @@ def hello_world():
 
 @app.route('/car_location')
 def car_location():
+    car = PublicSafety("John Doe")
+    response = car.car_location()
+    print response
     return "car location"
 
 
