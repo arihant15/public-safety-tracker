@@ -1,11 +1,9 @@
 from flask import Flask, request
-from here_server import PublicSafety
-import json
+import here_server
 
 app = Flask(__name__)
 
-car = PublicSafety("John Doe")
-#car2 = PublicSafety("Gandalf")
+car = here_server.PublicSafety("John Doe")
 
 @app.route('/')
 def hello_world():
@@ -32,7 +30,7 @@ def request_publicsafety():
     return car.request_publicsafety(location)
 
 if __name__ == '__main__':
-    """
-    Main method
-    """
     app.run(host="0.0.0.0", port=int("2000"), debug=True)
+
+
+

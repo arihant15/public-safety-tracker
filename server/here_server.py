@@ -1,6 +1,5 @@
 import requests
 import json
-import sys
 import xml.etree.ElementTree
 import webbrowser
 import threading
@@ -19,7 +18,7 @@ class PublicSafety():
         self.home_latitude, self.home_longtidue = self.get_location(self.home)
         #self.current_latiude, self.current_longtidue = self.get_location(self.home)
         self.current_location = self.get_location(self.home)
-        threading.Thread(target=self.start_operation).run()
+        threading.Thread(target=self.start_operation).start()
 
     def move_car(self,start, dest):
         start_location = self.get_location(start)
@@ -30,7 +29,6 @@ class PublicSafety():
             time.sleep(5)
             self.current_location[1] = float(self.current_location[1]) + hop_dist
             self.obtain_route(self.current_location, dest_location)
-        return
 
     def start_operation(self):
         i = True
