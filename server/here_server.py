@@ -28,7 +28,7 @@ class PublicSafety():
         for i in range(5):
             time.sleep(5)
             self.current_location[1] = float(self.current_location[1]) + hop_dist
-            self.obtain_route(self.current_location, dest_location)
+            #self.obtain_route(self.current_location, dest_location)
 
     def start_operation(self):
         i = True
