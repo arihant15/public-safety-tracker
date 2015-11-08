@@ -3,6 +3,7 @@ import json
 import sys
 import xml.etree.ElementTree
 import webbrowser
+import threading
 
 pickup_location_1 = "35 W 33rd St, Chicago, IL 60616"
 pickup_location_2 = "3241 S Federal St, Chicago, IL 60616"
@@ -16,6 +17,13 @@ class PublicSafety():
         self.home_latitude, self.home_longtidue = self.get_location(self.home)
         #self.current_latiude, self.current_longtidue = self.get_location(self.home)
         self.current_location = self.home
+        #threading.Thread(target=self.start_operation).start()
+
+    def start_operation(self):
+        dest_location = self.get_location(self.home)
+        curr_location = self.get_location(self.current_location)
+        path = self.obtain_route(curr_location,dest_location)
+        print path.json()
 
     def get_location(self, address):
         base_url = "http://geocoder.cit.api.here.com/6.2/geocode.xml"

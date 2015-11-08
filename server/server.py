@@ -19,6 +19,11 @@ def car_location():
     latitude, longitude = car.car_location()
     return latitude + "," + longitude
 
+@app.route('/start_operation')
+def start_operation():
+    car.start_operation()
+    return 'Start operation'
+
 @app.route('/get_route', methods=['GET'])
 def get_route():
     location = request.args.get('location')
