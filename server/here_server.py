@@ -21,7 +21,7 @@ class PublicSafety():
         pad_searchtext = "&searchtext="+self.home
         url = base_url + pad_app_id + pad_app_code + pad_gen + pad_searchtext
         response = requests.get(url)
-        return response.json()
+        return response.content
         #self.x_cordinate
         #self.y_cordinate
         
