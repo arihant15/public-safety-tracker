@@ -2,6 +2,7 @@ import requests
 import json
 import sys
 import xml.etree.ElementTree
+import webbrowser
 
 pickup_location_1 = "35 W 33rd St, Chicago, IL 60616"
 pickup_location_2 = "3241 S Federal St, Chicago, IL 60616"
@@ -41,9 +42,15 @@ class PublicSafety():
         pad_app_code = "&app_code="+self.properties['app-code']
         curr_lat, curr_long = self.get_location(self.current_location)
         pad_waypoint0 = "&waypoint0=geo!"+curr_lat+","+curr_long
-        dest_lat, dest_long = self.get_location(pickup_location_1)
+        dest_lat, dest_long = self.get_location(pickup_location_2)
         pad_waypoint1 = "&waypoint1=geo!"+dest_lat+","+dest_long
         mode = "&mode=fastest;car;"
         url = base_url + pad_app_id + pad_app_code + pad_waypoint0 + pad_waypoint1 + mode
         response = (requests.get(url))
+        base_url1 = "http://image.maps.cit.api.here.com/mia/1.6/routing"
+        poix0 = "&poix0="+curr_lat+","+curr_long+";00a3f2;00a3f2;11;."
+        poix1 = "&poix1="+dest_lat+","+dest_long+";white;white;11;."
+        markings = "&lc=1652B4&lw=6&t=0&ppi=320&w=400&h=600"
+        url1 = base_url1 + pad_app_id + pad_app_code + pad_waypoint0 + pad_waypoint1 + poix0 + poix1+ markings
+        webbrowser.open(url1)
         return response.json()
