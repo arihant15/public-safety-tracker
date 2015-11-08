@@ -26,8 +26,6 @@ class PublicSafety():
         for child in position:
             self.latitude = child.find('Latitude').text
             self.longitude = child.find('Longitude').text
-            print self.latitude
-            print self.longitude
 
     def obtain_route(self):
         base_url = "http://route.cit.api.here.com/routing/7.2/calculateroute.json"

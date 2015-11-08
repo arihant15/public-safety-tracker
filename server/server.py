@@ -13,8 +13,11 @@ def hello_world():
 @app.route('/car_location')
 def car_location():
     car = PublicSafety("John Doe")
-    response = car.car_location()
-    print response
+    car.car_location()
+
+    print car.latitude
+    print car.longitude
+
     return "car location"
 
 
