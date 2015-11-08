@@ -49,3 +49,8 @@ Carthage/Build
 
 fastlane/report.xml
 fastlane/screenshots
+=======
+*.pyc
+*.json
+*.DS_Store
+*.idea/
