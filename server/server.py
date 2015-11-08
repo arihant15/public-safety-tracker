@@ -24,6 +24,10 @@ def get_route():
     print request.args.get('pickuplocation')
     return json.dumps(car.obtain_route())
 
+@app.route('/request_publicsafety', methods=['GET'])
+def request_publicsafety():
+    return car.request_publicsafety(request.args.get('pickuplocation'))
+
 if __name__ == '__main__':
     """
     Main method
